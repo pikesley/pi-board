@@ -4,12 +4,21 @@
 <div class='well'>
   <div class='row'>
     <canvas class='col-md-6' id='quadrant' width='{{ site.data.size.side }}' height='{{ site.data.size.side }}'></canvas>
-    <dl class='col-md-6 dl-horizontal'>
-      <dt>Throws</dt><dd id='throws'></dd>
-      <dt>Hits</dt><dd id='hits'></dd>
-      <dt>π<dt><dd id='pi-value'></dd>
-    </dl>
-    {% include explanation.html %}
+    <div class='col-md-6'>
+      <div class='row'>
+        <dl class='col-md-10 dl-horizontal'>
+          <dt>Throws</dt><dd id='throws'></dd>
+          <dt>Hits</dt><dd id='hits'></dd>
+          <dt>π<dt><dd id='pi-value'></dd>
+        </dl>
+        <div class='col-md-2'>
+          <button class='button btn btn-info' onclick='darts()'>Start</button>
+        </div>
+      </div>
+      <div class='row'>
+        {% include explanation.html %}
+      </div>
+    </div>
   </div>
 </div>
 
@@ -20,35 +29,36 @@ var ctx = c.getContext('2d');
 ctx.fillStyle = '#000000';
 ctx.fillRect(0, 0, {{ site.data.size.side }}, {{ site.data.size.side }});
 
-var throws = 0
-var hits = 0
-while(throws <= 100000) {
-  var hit = false
-  x = Math.random()
-  y = Math.random()
-  if(is_hit(x, y)) {
-    hit = true
-    hits += 1
+function darts() {
+  var throws = 0
+  var hits = 0
+  while(throws <= 100000) {
+    var hit = false
+    x = Math.random()
+    y = Math.random()
+    if(is_hit(x, y)) {
+      hit = true
+      hits += 1
+    }
+
+    var colour = '#abcdef'
+    if(hit == true) {
+      colour = '#fa8100'
+    }
+
+    var plot_string = "plot(" + x + "," + y + ",'" + colour + "')"
+    var throws_string = "$('#throws').text('" + throws + "')"
+    var hits_string = "$('#hits').text('" + hits + "')"
+    var pi_string = "$('#pi-value').text('" + pi + "')"
+
+    var pi = (4.0 * (hits / throws))
+    var loopTimer = setTimeout(
+      plot_string + " ; " + throws_string + " ; " + hits_string + " ; " + pi_string,
+      100
+    )
+    throws += 1
   }
-
-  var colour = '#abcdef'
-  if(hit == true) {
-    colour = '#fa8100'
-  }
-
-  var plot_string = "plot(" + x + "," + y + ",'" + colour + "')"
-  var throws_string = "$('#throws').text('" + throws + "')"
-  var hits_string = "$('#hits').text('" + hits + "')"
-  var pi_string = "$('#pi-value').text('" + pi + "')"
-
-  var pi = (4.0 * (hits / throws))
-  var loopTimer = setTimeout(
-    plot_string + " ; " + throws_string + " ; " + hits_string + " ; " + pi_string,
-    100
-  )
-  throws += 1
 }
-
 function is_hit(x, y) {
   return ((Math.sqrt((x * x) + (y * y))) < 1)
 }
