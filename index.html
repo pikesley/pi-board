@@ -1,0 +1,51 @@
+---
+---
+<h1>Approximate π by throwing darts</h1>
+<div class='well'>
+  <div class='row'>
+    <canvas class='col-md-6' id='quadrant' width='512' height='512'></canvas>
+    <dl class='col-md-6 dl-horizontal'>
+      <dt>Throws</dt><dd id='throws'></dd>
+      <dt>Hits</dt><dd id='hits'></dd>
+      <dt>Pi<dt><dd id='pi-value'></dd>
+    </dl>
+  </div>
+</div>
+
+<script>
+
+var c = document.getElementById('quadrant');
+var ctx = c.getContext('2d');
+ctx.fillStyle = '#000000';
+ctx.fillRect(0,0,512,512);
+
+var throws = 0
+var hits = 0
+while(throws < 100000) {
+  var hit = false
+  x = Math.random()
+  y = Math.random()
+  if((Math.sqrt((x * x) + (y * y))) < 1) {
+    hit = true
+    hits = hits + 1
+  }
+
+  var colour = '#00ff00'
+  if(hit == true) {
+    colour = '#ff0000'
+  }
+  var pi = (4.0 * (hits / throws))
+  var loopTimer = setTimeout(
+    "plot("+x+","+y+",'"+colour+"') ; $('#throws').text('" + throws + "') ; $('#hits').text('" + hits + "') ; $('#pi-value').text('" + pi + "')",
+    200
+  )
+  throws = throws + 1
+}
+
+
+function plot(x, y, colour) {
+  ctx.fillStyle = colour
+  ctx.fillRect(x*512, y*512, 1, 1);
+}
+
+</script>
