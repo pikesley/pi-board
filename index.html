@@ -7,8 +7,9 @@
     <dl class='col-md-6 dl-horizontal'>
       <dt>Throws</dt><dd id='throws'></dd>
       <dt>Hits</dt><dd id='hits'></dd>
-      <dt>Pi<dt><dd id='pi-value'></dd>
+      <dt>π<dt><dd id='pi-value'></dd>
     </dl>
+    {% include explanation.html %}
   </div>
 </div>
 
@@ -21,7 +22,7 @@ ctx.fillRect(0,0,512,512);
 
 var throws = 0
 var hits = 0
-while(throws < 100000) {
+while(throws <= 100000) {
   var hit = false
   x = Math.random()
   y = Math.random()
@@ -30,14 +31,14 @@ while(throws < 100000) {
     hits = hits + 1
   }
 
-  var colour = '#00ff00'
+  var colour = '#abcdef'
   if(hit == true) {
-    colour = '#ff0000'
+    colour = '#fa8100'
   }
   var pi = (4.0 * (hits / throws))
   var loopTimer = setTimeout(
-    "plot("+x+","+y+",'"+colour+"') ; $('#throws').text('" + throws + "') ; $('#hits').text('" + hits + "') ; $('#pi-value').text('" + pi + "')",
-    200
+    "plot(" + x + "," + y + ",'" + colour + "') ; $('#throws').text('" + throws + "') ; $('#hits').text('" + hits + "') ; $('#pi-value').text('" + pi + "')",
+    100
   )
   throws = throws + 1
 }
@@ -45,7 +46,7 @@ while(throws < 100000) {
 
 function plot(x, y, colour) {
   ctx.fillStyle = colour
-  ctx.fillRect(x*512, y*512, 1, 1);
+  ctx.fillRect(x * 511, y * 511, 2, 2);
 }
 
 </script>
