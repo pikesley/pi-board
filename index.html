@@ -26,23 +26,32 @@ while(throws <= 100000) {
   var hit = false
   x = Math.random()
   y = Math.random()
-  if((Math.sqrt((x * x) + (y * y))) < 1) {
+  if(is_hit(x, y)) {
     hit = true
-    hits = hits + 1
+    hits += 1
   }
 
   var colour = '#abcdef'
   if(hit == true) {
     colour = '#fa8100'
   }
+
+  var plot_string = "plot(" + x + "," + y + ",'" + colour + "')"
+  var throws_string = "$('#throws').text('" + throws + "')"
+  var hits_string = "$('#hits').text('" + hits + "')"
+  var pi_string = "$('#pi-value').text('" + pi + "')"
+
   var pi = (4.0 * (hits / throws))
   var loopTimer = setTimeout(
-    "plot(" + x + "," + y + ",'" + colour + "') ; $('#throws').text('" + throws + "') ; $('#hits').text('" + hits + "') ; $('#pi-value').text('" + pi + "')",
+    plot_string + " ; " + throws_string + " ; " + hits_string + " ; " + pi_string,
     100
   )
-  throws = throws + 1
+  throws += 1
 }
 
+function is_hit(x, y) {
+  return ((Math.sqrt((x * x) + (y * y))) < 1)
+}
 
 function plot(x, y, colour) {
   ctx.fillStyle = colour
