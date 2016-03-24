@@ -1,6 +1,0 @@
-side: 512
-blob: 8
-colours:
-  canvas: '#000000'
-  throw: '#abcdef'
-  hit: '#fa8100'
