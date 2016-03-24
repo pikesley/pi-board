@@ -34,8 +34,8 @@ function darts() {
   var hits = 0
   while(throws <= 100000) {
     var hit = false
-    x = Math.random()
-    y = Math.random()
+    x = negify(Math.random())
+    y = negify(Math.random())
     if(is_hit(x, y)) {
       hit = true
       hits += 1
@@ -65,8 +65,16 @@ function is_hit(x, y) {
 
 function plot(x, y, colour) {
   ctx.fillStyle = colour
-  var scale = {{ site.data.size.side }} - {{ site.data.size.blob }}
-  ctx.fillRect(x * scale, y * scale, {{ site.data.size.blob }}, {{ site.data.size.blob }});
+  var scale = ({{ site.data.size.side }} - {{ site.data.size.blob }}) / 2
+  ctx.fillRect((x * scale) + scale, (y * scale) + scale, {{ site.data.size.blob }}, {{ site.data.size.blob }});
+}
+
+function negify(value) {
+  if(Math.random() > 0.5) {
+    return -value
+  } else {
+    return value
+  }
 }
 
 </script>
